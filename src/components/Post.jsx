@@ -6,8 +6,16 @@ import ptBR from 'date-fns/locale/pt-BR'
 import { Avatar } from './Avatar'
 import { Comment } from './Comment'
 import styles from './Post.module.css'
+import { useState } from 'react'
+
+// Estado = variáveis que eu quero que o componente monitore
 
 export function Post({ author, publishedAt, content }) {
+
+    const [comments, setComments] = useState([
+        'Post Muito Bancana!'
+    ])
+    const [newCommentText, setNewCommentText] = useState('')
     
     //Formatação da Data
     const publishedDateFormatted = format(publishedAt, "dd 'de' LLLL 'às' HH:mm", {
@@ -18,6 +26,16 @@ export function Post({ author, publishedAt, content }) {
         locale: ptBR,
         addSuffix: true,
     })
+
+    function handleCreateNewComment() {
+        event.preventDefault()
+
+        setComments([...comments, newCommentText])
+        setNewCommentText('')
+    }
+    function handleNewCommentChange() {
+        setNewCommentText(event.target.value)
+    }
 
     return (
         <>
@@ -49,10 +67,10 @@ export function Post({ author, publishedAt, content }) {
                     </p>
                 </div>
 
-                <form className={styles.commentForm}>
+                <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
                     <strong>Deixe seu comentário</strong>
 
-                    <textarea placeholder="Deixe seu comentário."></textarea>
+                    <textarea name="comment" placeholder="Deixe seu comentário." value={newCommentText} onChange={handleNewCommentChange}></textarea>
 
                     <footer>
                         <button type="submit">Comentar</button>
@@ -60,9 +78,9 @@ export function Post({ author, publishedAt, content }) {
                 </form>
 
                 <div className={styles.commentList}>
-                    <Comment />
-                    <Comment />
-                    <Comment />
+                    {comments.map(comment => {
+                        return <Comment key={comment} content={comment}/>
+                    })}
                 </div>
             </article>
         </>
