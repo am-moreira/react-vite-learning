@@ -1,10 +1,12 @@
+import { useState } from 'react'
+
 import { format, formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 
 import { Avatar } from './Avatar'
 import { Comment } from './Comment'
 import styles from './Post.module.css'
-import { useState } from 'react'
+
 
 // Estado = variáveis que eu quero que o componente monitore
 
@@ -36,10 +38,11 @@ export function Post({ author, publishedAt, content }) {
     }
 
     function deleteComment(commentToDelete) {
-        const commentWithoutDeletedOne = comments.filter(comment => {
+        const commentsWithoutDeletedOne = comments.filter( comment => {
             return comment !== commentToDelete
         })
-        setComments(commentWithoutDeletedOne)
+
+        setComments(commentsWithoutDeletedOne);
     }
 
     return (
@@ -84,7 +87,7 @@ export function Post({ author, publishedAt, content }) {
 
                 <div className={styles.commentList}>
                     {comments.map(comment => {
-                        return <Comment key={comment} content={comment} onDeleteComment={deleteComment}/>
+                        return <Comment key={comment } content={comment} onDeleteComment={deleteComment}/>
                     })}
                 </div>
             </article>
