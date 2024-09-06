@@ -1,12 +1,11 @@
-/* eslint react/prop-types: 0 */
-
 import { ThumbsUp, Trash } from 'phosphor-react'
 import styles from './Comment.module.css'
 import { Avatar } from './Avatar'
 
-export function Comment(props) {
+export function Comment({ content, onDeleteComment }) {
+
     function handleDeleteComment() {
-        console.log('deletar')
+        onDeleteComment(content)
     }
 
     return (
@@ -26,7 +25,7 @@ export function Comment(props) {
                         </button>
                     </header>
 
-                    <p>{props.content}</p>
+                    <p>{content}</p>
                 </div>
 
                 <footer>
